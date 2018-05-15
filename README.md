@@ -40,7 +40,7 @@ transform = vtrfm.Compose([
 ])
 ```
 
-or, you can use some pretrained transformers:
+or, you can use some pre-defined transformers:
 
 ```python
 from quadratum.transformer import Transformer
