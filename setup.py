@@ -8,7 +8,6 @@ from setuptools import find_packages, setup
 requirements = [
     'setuptools',
     'numpy',
-    'imageio',
     'scikit-image',
     'torch',
     'torchvision',
@@ -16,7 +15,7 @@ requirements = [
 
 setup(
     name='quadratum',
-    version='0.1.0',
+    version='0.1.1',
     license='MIT',
     author='Jamie Seol',
     author_email='theeluwin@gmail.com',

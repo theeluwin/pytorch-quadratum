@@ -7,11 +7,11 @@ Just for me. I needed it.
 
 Note that all functors implemented here assumes an input image to be (H, W, C)-size np.uint8, ranged from 0 to 255.
 
-`Whiten`: make all transparent pixels white.
+* `Whiten`: make all transparent pixels white.
 
-`Dominofy`: limits the ratio of an image, like dominos.
+* `Dominofy`: limits the ratio of an image, like dominos.
 
-`Contain`: contains an image into given canvas (or box, whatever), just like, you know, the `background-size: contain;` thingi from CSS?
+* `Contain`: contains an image into given canvas (or box, whatever), just like, you know, the `background-size: contain;` thingi from CSS?
 
 
 Installation
@@ -43,8 +43,11 @@ transform = vtrfm.Compose([
 or, you can use some pre-defined transformers:
 
 ```python
+from skimage.io import imread
 from quadratum.transformer import Transformer
 transform = Transformer('resnet')
+image = imread('image.png')  # image.shape => (640, 960, 4)
+x = transform(image)  # x.size() => torch.Size([3, 224, 224])
 ```
 
 ---

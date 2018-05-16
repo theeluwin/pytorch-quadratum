@@ -4,11 +4,16 @@ from __future__ import division
 
 import numpy as np
 
+from skimage.color import gray2rgb
 from skimage.transform import resize
 
 
 def whiten(image, threshold=255):
-    h, w, d = image.shape
+    try:
+        h, w, d = image.shape
+    except:
+        h, w = image.shape
+        return gray2rgb(image)
     if d == 3:
         return image
     canvas = np.ones((h, w, 3), dtype=np.uint8) * 255
