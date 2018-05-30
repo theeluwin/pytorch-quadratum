@@ -18,7 +18,7 @@ Installation
 -----
 
 ```sh
-python setup.py install
+pip install quadratum
 ```
 
 Usage
