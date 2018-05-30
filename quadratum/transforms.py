@@ -28,8 +28,9 @@ class Dominofy(object):
 class Contain(object):
     """Contains an image into given canvas, like good-old `background-size: contain;` from CSS."""
 
-    def __init__(self, size):
+    def __init__(self, size, fill_black=False):
         self.size = size
+        self.fill_black = fill_black
 
     def __call__(self, image):
-        return F.contain(image, self.size)
+        return F.contain(image, self.size, fill_black=self.fill_black)

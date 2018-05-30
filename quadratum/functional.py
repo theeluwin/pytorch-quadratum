@@ -38,12 +38,15 @@ def dominofy(image, threshold=2):
         return image[:, int(cx - size): int(cx + size), :]
 
 
-def contain(image, size):
+def contain(image, size, fill_black=False):
     if type(size) == int:
         size = (size, size)
     bh = size[0]
     bw = size[1]
-    canvas = np.ones((bh, bw, 3), dtype=np.uint8) * 255
+    if fill_black:
+        canvas = np.zeros((bh, bw, 3), dtype=np.uint8)
+    else:
+        canvas = np.ones((bh, bw, 3), dtype=np.uint8) * 255
     ih, iw, _ = image.shape
     ir = ih / iw
     br = bh / bw
