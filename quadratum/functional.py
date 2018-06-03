@@ -2,10 +2,33 @@
 
 from __future__ import division
 
+import os
 import numpy as np
 
+from skimage.io import imread
 from skimage.color import gray2rgb
 from skimage.transform import resize
+
+
+def validate(path, min_size=1):
+    if not os.path.isfile(path):
+        return False
+    try:
+        image = imread(path)
+    except:
+        return False
+    try:
+        h, w = image.shape
+    except:
+        try:
+            h, w, c = image.shape
+        except:
+            return False
+    if h < min_size or w < min_size:
+        return False
+    if not image.var():
+        return False
+    return True
 
 
 def whiten(image, threshold=255):
