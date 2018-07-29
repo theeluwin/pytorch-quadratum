@@ -15,7 +15,7 @@ requirements = [
 
 setup(
     name='quadratum',
-    version='0.1.3',
+    version='0.1.4',
     license='MIT',
     author='Jamie Seol',
     author_email='theeluwin@gmail.com',
