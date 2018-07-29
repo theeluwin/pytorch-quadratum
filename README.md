@@ -9,6 +9,8 @@ Note that all functors implemented here assumes an input image to be (H, W, C)-s
 
 * `Whiten`: make all transparent pixels white.
 
+* `Invert`: invert RGB values.
+
 * `Dominofy`: limits the ratio of an image, like dominos.
 
 * `Contain`: contains an image into given canvas (or box, whatever), just like, you know, the `background-size: contain;` thingi from CSS?

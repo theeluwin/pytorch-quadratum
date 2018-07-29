@@ -2,17 +2,27 @@
 
 from . import functional as F
 
-__all__ = ["Whiten", "Dominofy", "Contain"]
+__all__ = ["Whiten", "Invert", "Dominofy", "Contain"]
 
 
 class Whiten(object):
     """Make all transparent pixels white (if there is an alpha channel)."""
 
-    def __init__(self, threshold=255):
-        self.threshold = threshold
+    def __init__(self):
+        pass
 
     def __call__(self, image):
-        return F.whiten(image, self.threshold)
+        return F.whiten(image)
+
+
+class Invert(object):
+    """Invert RGB values."""
+
+    def __init__(self):
+        pass
+
+    def __call__(self, image):
+        return F.invert(image)
 
 
 class Dominofy(object):
@@ -28,9 +38,12 @@ class Dominofy(object):
 class Contain(object):
     """Contains an image into given canvas, like good-old `background-size: contain;` from CSS."""
 
-    def __init__(self, size, fill_black=False):
+    def __init__(self, size, fill='white'):
         self.size = size
-        self.fill_black = fill_black
+        if fill in ['white', 'black']:  # todo: customizable filling color
+            self.fill = fill
+        else:
+            raise ValueError("Invalid fill option.")
 
     def __call__(self, image):
-        return F.contain(image, self.size, fill_black=self.fill_black)
+        return F.contain(image, self.size, fill=self.fill)

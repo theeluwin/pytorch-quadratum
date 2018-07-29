@@ -31,20 +31,26 @@ def validate(path, min_size=1):
     return True
 
 
-def whiten(image, threshold=255):
+def whiten(image):
     try:
-        h, w, d = image.shape
+        h, w, c = image.shape
     except:
         h, w = image.shape
         return gray2rgb(image)
-    if d == 3:
+    if c == 3:
         return image
-    canvas = np.ones((h, w, 3), dtype=np.uint8) * 255
-    for y in range(h):
-        for x in range(w):
-            if image[y, x][3] >= threshold:
-                canvas[y, x] = image[y, x][:3]
-    return canvas
+    elif c == 4:
+        alpha = image[:, :, 3].astype(np.float32)[:, :, np.newaxis] / 255
+        image = image[:, :, :3]
+        canvas = np.ones((h, w, 3), dtype=np.float32) * 255
+        composed = alpha * image + (1 - alpha) * canvas
+        return composed.astype(np.uint8)
+    else:
+        raise ValueError("Invalid image channel size.")
+
+
+def invert(image):
+    return image.max() - image
 
 
 def dominofy(image, threshold=2):
@@ -61,15 +67,17 @@ def dominofy(image, threshold=2):
         return image[:, int(cx - size): int(cx + size), :]
 
 
-def contain(image, size, fill_black=False):
+def contain(image, size, fill='white'):
     if type(size) == int:
         size = (size, size)
     bh = size[0]
     bw = size[1]
-    if fill_black:
+    if fill == 'white':
+        canvas = np.ones((bh, bw, 3), dtype=np.uint8) * 255
+    elif fill == 'black':
         canvas = np.zeros((bh, bw, 3), dtype=np.uint8)
     else:
-        canvas = np.ones((bh, bw, 3), dtype=np.uint8) * 255
+        raise ValueError("Invalid fill option.")
     ih, iw, _ = image.shape
     ir = ih / iw
     br = bh / bw
