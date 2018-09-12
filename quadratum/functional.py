@@ -10,7 +10,7 @@ from skimage.color import gray2rgb
 from skimage.transform import resize
 
 
-def validate(path, min_size=1):
+def validate(path, min_size=2):
     if not os.path.isfile(path):
         return False
     try:
@@ -26,7 +26,7 @@ def validate(path, min_size=1):
             return False
     if h < min_size or w < min_size:
         return False
-    if not image.var():
+    if image.var() < 1:
         return False
     return True
 
