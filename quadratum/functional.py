@@ -5,7 +5,8 @@ from __future__ import division
 import os
 import numpy as np
 
-from skimage.io import imread
+from cv2 import imread
+from cv2 import imencode
 from skimage.color import gray2rgb
 from skimage.transform import resize
 
@@ -15,6 +16,7 @@ def validate(path, min_size=2):
         return False
     try:
         image = imread(path)
+        img_str = imencode('.jpg', image)[1]
     except:
         return False
     try:
@@ -27,6 +29,9 @@ def validate(path, min_size=2):
     if h < min_size or w < min_size:
         return False
     if image.var() < 1:
+        return False
+    if not (img_str[0] == 0xff and img_str[1] == 0xd8 and
+        img_str[len(img_str)-2] == 0xff and img_str[len(img_str)-1] == 0xd9):
         return False
     return True
 
