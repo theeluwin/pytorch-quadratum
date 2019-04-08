@@ -11,27 +11,30 @@ from skimage.color import gray2rgb
 from skimage.transform import resize
 
 
-def validate(path, min_size=2):
+def validate_image(path, min_size=2, allow_gray=False):
     if not os.path.isfile(path):
         return False
-    try:
-        image = imread(path)
-        img_str = imencode('.jpg', image)[1]
-    except:
+    image = imread(path)
+    if image is None:
+        return False
+    is_valid, istr = imencode('.jpg', image)
+    if not is_valid:
         return False
     try:
         h, w = image.shape
-    except:
+        c = 1
+    except ValueError:
         try:
             h, w, c = image.shape
-        except:
+        except ValueError:
             return False
+    if not allow_gray and c < 3:
+        return False
     if h < min_size or w < min_size:
         return False
     if image.var() < 1:
         return False
-    if not (img_str[0] == 0xff and img_str[1] == 0xd8 and
-        img_str[len(img_str)-2] == 0xff and img_str[len(img_str)-1] == 0xd9):
+    if not (istr[0] == 0xff and istr[1] == 0xd8 and istr[len(istr) - 2] == 0xff and istr[len(istr) - 1] == 0xd9):
         return False
     return True
 
