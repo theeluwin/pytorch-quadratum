@@ -13,15 +13,18 @@ Note that all functors implemented here assumes an input image to be (H, W, C)-s
 
 * `Dominofy`: limits the ratio of an image, like dominos.
 
-* `Contain`: contains an image into given canvas (or box, whatever), just like, you know, the `background-size: contain;` thingi from CSS?
+* `Contain`: contains an image into the given canvas (or box, whatever), just like, you know, the `background-size: contain;` thingy from CSS.
 
+---
 
 Installation
 -----
 
-```sh
+```bash
 pip install quadratum
 ```
+
+---
 
 Usage
 -----
@@ -54,4 +57,4 @@ x = transform(image)  # x.size() => torch.Size([3, 224, 224])
 
 ---
 
-"Quadratum" means "square" in Latin. I wanted to make any noisy user-input images into fine-nice-good-well-godlike-heaven-deep-learning-applicable-preprocessed-square-images.
+The term "quadratum" means "square" in Latin. I wanted to make any noisy user-input images into fine-nice-good-well-godlike-heaven-deep-learning-applicable-preprocessed-square-images.

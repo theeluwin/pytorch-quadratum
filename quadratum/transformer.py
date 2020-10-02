@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+import torch
+import numpy as np
 
 from . import transforms as qtrfm
 from torchvision import transforms as vtrfm
@@ -7,7 +8,8 @@ from torchvision import transforms as vtrfm
 class Transformer(object):
     """Useful pre-defined transforms just for me."""
 
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
+        self.transform: vtrfm.Compose
         if name == 'resnet':
             self.transform = vtrfm.Compose([
                 qtrfm.Whiten(),
@@ -31,5 +33,5 @@ class Transformer(object):
         else:
             raise NotImplementedError
 
-    def __call__(self, image):
+    def __call__(self, image: np.ndarray) -> torch.Tensor:
         return self.transform(image)

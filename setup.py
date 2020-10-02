@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
+from typing import List
 
-import sys
+from setuptools import setup
+from setuptools import find_packages
 
-from setuptools import find_packages, setup
 
-
-requirements = [
+requirements: List[str] = [
     'setuptools',
     'numpy',
     'scikit-image',
@@ -13,9 +12,10 @@ requirements = [
     'torchvision',
 ]
 
+
 setup(
     name='quadratum',
-    version='0.1.5',
+    version='0.2.0',
     license='MIT',
     author='Jamie Seol',
     author_email='theeluwin@gmail.com',
@@ -24,5 +24,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=requirements,
-    classifiers=[],
+    classifiers=[]
 )
