@@ -1,7 +1,10 @@
 import os
 import numpy as np
 
-from typing import Any
+from typing import (
+    Tuple,
+    Union,
+)
 
 from cv2 import (
     imread,
@@ -118,33 +121,35 @@ def dominofy(image: np.ndarray,
 
 
 def contain(image: np.ndarray,
-            size: Any,
-            fill: Any = 'white'
+            size: Union[int, Tuple[int, int]],
+            fill: Union[str, Tuple[int, int, int]] = 'white'
             ) -> np.ndarray:
 
     # deal with size parameter
     canvas_height: int
     canvas_width: int
-    if type(size) == int:
+    if isinstance(size, int):
         canvas_height = size
         canvas_width = size
-    elif (type(size) == tuple or type(size) == list) and len(size) == 2:
+    elif isinstance(size, tuple) and len(size) == 2:
         canvas_height = size[0]
         canvas_width = size[1]
     else:
-        raise TypeError(f"Invalid parameter type: size should be either of int or (int, int), but got {size}({type(size)}).")
+        raise TypeError(f"Invalid parameter type: `size` should be either `int` or `tuple` of (`int`, `int`), but got {size} with type `{type(size)}``.")
     canvas: np.ndarray = np.ones((canvas_height, canvas_width, 3), dtype=np.uint8)
 
     # deal with fill parameter
-    if type(fill) == str:
+    if isinstance(fill, str):
         if fill == 'white':
             canvas = canvas * 255
         elif fill == 'black':
             canvas = canvas * 0
-    elif (type(fill) == tuple or type(fill) == list) and len(fill) == 3:
+        else:
+            raise TypeError(f"Invalid parameter value: `fill` should be either of 'white', 'black', or `tuple` of (`int`, `int`, `int`), but got {fill} with type `{type(fill)}`.")
+    elif isinstance(fill, tuple) and len(fill) == 3:
         canvas = canvas * fill
     else:
-        raise TypeError(f"Invalid parameter type: fill should be either of 'white', 'black', or (int, int, int), but got {fill}({type(fill)}).")
+        raise TypeError(f"Invalid parameter type: `fill` should be either of 'white', 'black', or `tuple` of (`int`, `int`, `int`), but got {fill} with type `{type(fill)}`.")
 
     # get the original image shape
     original_height: int
