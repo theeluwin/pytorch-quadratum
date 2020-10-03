@@ -1,11 +1,14 @@
 import numpy as np
 
-from typing import Any
+from typing import (
+    Tuple,
+    Union,
+)
 
 from . import functional as F
 
 
-__all__ = (
+__all__: Tuple[str, ...] = (
     'Whiten',
     'Invert',
     'Dominofy',
@@ -46,9 +49,12 @@ class Dominofy(object):
 class Contain(object):
     """Contains an image into given canvas, like good-old `background-size: contain;` from CSS."""
 
-    def __init__(self, size: Any, fill: Any = 'white') -> None:
-        self.size: Any = size
-        self.fill: Any = fill
+    def __init__(self,
+                 size: Union[int, Tuple[int, int]],
+                 fill: Union[str, Tuple[int, int, int]] = 'white'
+                 ) -> None:
+        self.size: Union[int, Tuple[int, int]] = size
+        self.fill: Union[str, Tuple[int, int, int]] = fill
 
     def __call__(self, image: np.ndarray) -> np.ndarray:
         return F.contain(image, size=self.size, fill=self.fill)

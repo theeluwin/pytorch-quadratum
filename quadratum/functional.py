@@ -6,12 +6,19 @@ from typing import (
     Union,
 )
 
-from cv2 import (
-    imread,
-    imencode,
-)
+from cv2 import imencode
+from skimage.io import imread
 from skimage.color import gray2rgb
 from skimage.transform import resize
+
+
+__all__: Tuple[str, ...] = (
+    'validate_image',
+    'whiten',
+    'invert',
+    'dominofy',
+    'contain',
+)
 
 
 def validate_image(path: str,
@@ -80,10 +87,10 @@ def whiten(image: np.ndarray) -> np.ndarray:
 
     # if alpha-channeled, fill with white (actually, it's more like dumping the image on a white canvas)
     elif c == 4:
-        image = image[:, :, :3]
+        content: np.ndarray = image[:, :, :3]
         alpha: np.ndarray = image[:, :, 3].astype(np.float32)[:, :, np.newaxis] / 255
         canvas: np.ndarray = np.ones((h, w, 3), dtype=np.float32) * 255
-        composed: np.ndarray = alpha * image + (1 - alpha) * canvas
+        composed: np.ndarray = alpha * content + (1 - alpha) * canvas
         return composed.astype(np.uint8)
 
     # no other cases are allowed

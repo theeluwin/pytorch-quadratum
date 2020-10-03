@@ -1,21 +1,22 @@
-from typing import List
+from typing import Tuple
 
 from setuptools import setup
 from setuptools import find_packages
 
 
-requirements: List[str] = [
+requirements: Tuple[str, ...] = (
     'setuptools',
     'numpy',
     'scikit-image',
+    'opencv-python',
     'torch',
     'torchvision',
-]
+)
 
 
 setup(
     name='quadratum',
-    version='0.2.0',
+    version='0.2.1',
     license='MIT',
     author='Jamie Seol',
     author_email='theeluwin@gmail.com',
